@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alibaba.test.mapper.replayMapper">
+  <resultMap id="BaseResultMap" type="com.alibaba.test.entity.replay">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="app_name" jdbcType="VARCHAR" property="appName" />
+    <result column="environment" jdbcType="VARCHAR" property="environment" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="repeat_id" jdbcType="VARCHAR" property="repeatId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="trace_id" jdbcType="VARCHAR" property="traceId" />
+    <result column="cost" jdbcType="BIGINT" property="cost" />
+    <result column="success" jdbcType="BIT" property="success" />
+    <result column="record_id" jdbcType="BIGINT" property="recordId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.alibaba.test.entity.replay">
+    <result column="diff_result" jdbcType="LONGVARCHAR" property="diffResult" />
+    <result column="response" jdbcType="LONGVARCHAR" property="response" />
+    <result column="mock_invocation" jdbcType="LONGVARCHAR" property="mockInvocation" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, gmt_create, gmt_modified, app_name, environment, ip, repeat_id, status, trace_id, 
+    cost, success, record_id
+  </sql>
+  <sql id="Blob_Column_List">
+    diff_result, response, mock_invocation
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from replay
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from replay
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.alibaba.test.entity.replay">
+    insert into replay (id, gmt_create, gmt_modified, 
+      app_name, environment, ip, 
+      repeat_id, status, trace_id, 
+      cost, success, record_id, 
+      diff_result, response, mock_invocation
+      )
+    values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{appName,jdbcType=VARCHAR}, #{environment,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{repeatId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{traceId,jdbcType=VARCHAR}, 
+      #{cost,jdbcType=BIGINT}, #{success,jdbcType=BIT}, #{recordId,jdbcType=BIGINT}, 
+      #{diffResult,jdbcType=LONGVARCHAR}, #{response,jdbcType=LONGVARCHAR}, #{mockInvocation,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.alibaba.test.entity.replay">
+    insert into replay
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="appName != null">
+        app_name,
+      </if>
+      <if test="environment != null">
+        environment,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="repeatId != null">
+        repeat_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="traceId != null">
+        trace_id,
+      </if>
+      <if test="cost != null">
+        cost,
+      </if>
+      <if test="success != null">
+        success,
+      </if>
+      <if test="recordId != null">
+        record_id,
+      </if>
+      <if test="diffResult != null">
+        diff_result,
+      </if>
+      <if test="response != null">
+        response,
+      </if>
+      <if test="mockInvocation != null">
+        mock_invocation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appName != null">
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="environment != null">
+        #{environment,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="repeatId != null">
+        #{repeatId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="traceId != null">
+        #{traceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null">
+        #{cost,jdbcType=BIGINT},
+      </if>
+      <if test="success != null">
+        #{success,jdbcType=BIT},
+      </if>
+      <if test="recordId != null">
+        #{recordId,jdbcType=BIGINT},
+      </if>
+      <if test="diffResult != null">
+        #{diffResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="response != null">
+        #{response,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mockInvocation != null">
+        #{mockInvocation,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alibaba.test.entity.replay">
+    update replay
+    <set>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appName != null">
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="environment != null">
+        environment = #{environment,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="repeatId != null">
+        repeat_id = #{repeatId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="traceId != null">
+        trace_id = #{traceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null">
+        cost = #{cost,jdbcType=BIGINT},
+      </if>
+      <if test="success != null">
+        success = #{success,jdbcType=BIT},
+      </if>
+      <if test="recordId != null">
+        record_id = #{recordId,jdbcType=BIGINT},
+      </if>
+      <if test="diffResult != null">
+        diff_result = #{diffResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="response != null">
+        response = #{response,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mockInvocation != null">
+        mock_invocation = #{mockInvocation,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.alibaba.test.entity.replay">
+    update replay
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      app_name = #{appName,jdbcType=VARCHAR},
+      environment = #{environment,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      repeat_id = #{repeatId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      trace_id = #{traceId,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=BIGINT},
+      success = #{success,jdbcType=BIT},
+      record_id = #{recordId,jdbcType=BIGINT},
+      diff_result = #{diffResult,jdbcType=LONGVARCHAR},
+      response = #{response,jdbcType=LONGVARCHAR},
+      mock_invocation = #{mockInvocation,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alibaba.test.entity.replay">
+    update replay
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      app_name = #{appName,jdbcType=VARCHAR},
+      environment = #{environment,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      repeat_id = #{repeatId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      trace_id = #{traceId,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=BIGINT},
+      success = #{success,jdbcType=BIT},
+      record_id = #{recordId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
